@@ -29,6 +29,13 @@
 @property (nonatomic, strong) NSAttributedString *attributedPlaceholder;
 
 /**
+ The color string for the placeholder.
+ 
+ The default value is `nil`.
+ */
+@property (nonatomic, strong) UIColor *placeholderColor;
+
+/**
  Returns the drawing rectangle for the text views’s placeholder text.
 
  @param bounds The bounding rectangle of the receiver.

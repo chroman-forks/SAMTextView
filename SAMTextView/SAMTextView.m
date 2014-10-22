@@ -54,7 +54,6 @@
 	self.attributedPlaceholder = [[NSAttributedString alloc] initWithString:string attributes:attributes];
 }
 
-
 - (NSString *)placeholder {
 	return self.attributedPlaceholder.string;
 }
@@ -88,6 +87,21 @@
 	[self setNeedsDisplay];
 }
 
+- (void)setPlaceholderColor:(UIColor *)placeholderColor
+{
+    if (!placeholderColor) {
+        return;
+    }
+    _placeholderColor = placeholderColor;
+    __weak typeof(self)weakSelf = self;
+    [self.attributedPlaceholder enumerateAttributesInRange:NSMakeRange(0, self.placeholder.length) options:NSAttributedStringEnumerationReverse usingBlock:
+     ^(NSDictionary *attributes, NSRange range, BOOL *stop) {
+         __strong typeof(weakSelf)strongSelf = weakSelf;
+         NSMutableDictionary *mutableAttributes = [NSMutableDictionary dictionaryWithDictionary:attributes];
+         mutableAttributes[NSForegroundColorAttributeName] = placeholderColor;
+         strongSelf.attributedPlaceholder = [[NSAttributedString alloc] initWithString:strongSelf.placeholder attributes:mutableAttributes];
+     }];
+}
 
 #pragma mark - NSObject
 
